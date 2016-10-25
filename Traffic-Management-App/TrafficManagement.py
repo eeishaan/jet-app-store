@@ -10,8 +10,8 @@ import prpd_common_pb2
 # sender = 'JET-Router-R1@juniper.net'
 # receivers = ['gvenkata@juniper.net']
 
-R1 = '10.221.130.97'
-R1_IFL_SNMP_INDEX = '518'
+R1 = '10.221.132.89'
+R1_IFL_SNMP_INDEX = '511'
 DIP = '1.1.1.1/32'
 NIP = '10.1.1.2'
 APP_USER = 'regress'
@@ -28,9 +28,9 @@ DEFAULT_ROUTE_GET_APP_ID = '0'
 DEFAULT_ROUTE_GET_TABLE_NAME = 'inet6.0'
 DEFAULT_ROUTE_GET_PREFIX = '1.1.1.1'
 
-channel = grpc.insecure_channel('10.221.130.97:32767')
+channel = grpc.insecure_channel(R1+':32767')
 sec_stub = authentication_service_pb2.LoginStub(channel)
-cred = authentication_service_pb2.LoginRequest(user_name='regress',password='MaRtInI',client_id='1211114')
+cred = authentication_service_pb2.LoginRequest(user_name=APP_USER,password=APP_PASSWORD,client_id='1211114')
 res = sec_stub.LoginCheck(cred)
 print "Authentication "+('success' if res else 'failure')
 route_stub = Route.RibStub(channel)
@@ -108,7 +108,7 @@ def on_message(message):
             route_present = False
     elif (res == "falling") and (route_present != False):
         print ("\n>>>>>>>>>>>>>>Primary Path input traffic rate is below threshold value<<<<<<<<<<<<<<<<<<<")
-
+        exit()
         # Delete route as IFL input rate is below threshold
         preference = DEFAULT_ROUTE_PREFERENCE_LIST
         metric = DEFAULT_ROUTE_METRIC_LIST
