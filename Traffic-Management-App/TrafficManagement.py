@@ -233,9 +233,8 @@ def on_message(message):
                         if nexthop_ip.gateway_address.inet.addr_string == NIP:
                             print "Route add API injected route successfully"
             print '##################################################################################'
-            mail(message=""" Subject: JET Notification:Traffic rate is above
-                               threshold on primary path. Body: JET App
-                               rerouted traffic via secondary path""")
+            mail(message="""Subject: JET Notification:Traffic rate is above threshold on primary path. 
+                             Body: JET App rerouted traffic via secondary path""")
         else:
             print "V4RouteAdd service API activation failed \n"
             route_present = False
